@@ -1,11 +1,10 @@
 import { FaBell, FaCaretDown, FaSearch } from "react-icons/fa";
-import styled from "styled-components"
-import tw from "twin.macro"
+import styled from "styled-components";
+import tw from "twin.macro";
 import { man } from "../../assets";
 
-
 const Wrapper = styled.header`
-    ${tw`
+  ${tw`
         w-full
         h-[100px]
         p-[1.5rem]
@@ -14,7 +13,7 @@ const Wrapper = styled.header`
         items-center
         justify-between
         z-10
-        border-b
+        
     `}
 `;
 
@@ -22,7 +21,7 @@ const Left = styled.div`
   ${tw`
     
   `}
-`
+`;
 
 const NavbarTitle = styled.h1`
   ${tw`
@@ -30,6 +29,7 @@ const NavbarTitle = styled.h1`
       md:text-lg
       lg:text-[30px]
       font-bold
+      text-[#1c1b44]
   `}
 `;
 
@@ -45,6 +45,7 @@ const Icons = styled.div`
       lg:flex
       items-center
       hidden
+      text-[#1c1b44]
   `}
 `;
 
@@ -57,7 +58,7 @@ const Icon = styled.span`
       lg:text-[20px]
 
   `}
-`
+`;
 
 const User = styled.span`
   ${tw`
@@ -72,9 +73,7 @@ const Profile = styled.img`
     h-[50px]
     w-[50px]
     rounded-full
-    border
-    border-gray-500
-    border-[1px]
+    
   `}
 `;
 
@@ -83,7 +82,6 @@ const UserName = styled.h5`
       hidden
       lg:inline-block    
   `}
-
 `;
 
 const NotificationDot = styled.span`
@@ -96,7 +94,7 @@ const NotificationDot = styled.span`
       right-0
       rounded-full
   `}
-`
+`;
 
 const Caret = styled.span`
   ${tw`
@@ -130,7 +128,7 @@ const Navbar = () => {
         </User>
       </Right>
     </Wrapper>
-  )
-}
+  );
+};
 
-export default Navbar
+export default Navbar;
