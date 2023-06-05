@@ -4,8 +4,6 @@ import { FaRegClipboard, FaRegHeart, FaUsers } from "react-icons/fa";
 import styled from "styled-components";
 import tw from "twin.macro";
 import Layout from "../../components/Layout";
-import CanvasJSReact from "react-charts";
-import { options } from "../../constants/temp_chart_data";
 const num = 800000;
 const Container = styled.section`
   ${tw`
@@ -111,9 +109,7 @@ const Home = () => {
             </ContentCell>
           </Content>
         </FiguresCard>
-        <ChartCard>
-          <CanvasJSReact options={options} />
-        </ChartCard>
+        <ChartCard></ChartCard>
       </Container>
     </Layout>
   );
