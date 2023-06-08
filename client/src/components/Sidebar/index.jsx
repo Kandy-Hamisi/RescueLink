@@ -48,14 +48,15 @@ const Wrapper = styled.aside`
 const Button = styled.div`
   ${tw`
         absolute
-        p-[10px]
+        p-[0px]
+        m-[0px]
         bg-transparent
         bottom-0
         left-0
         w-full
         flex
        justify-center
-        items-center
+       
         cursor-pointer
         text-[#7C8DB5]
         hover:text-[#347AE2]
@@ -225,7 +226,7 @@ const Sidebar = () => {
 
   return (
     <Wrapper isMinimized={isMinimized}>
-      {isMinimized ? (
+      {isSmallScreen ? (
         <LogoContainer>
           <img src={Logo} />
         </LogoContainer>
@@ -237,6 +238,7 @@ const Sidebar = () => {
       <Splitter />
       <NavigationContainer>
         <NavigationItem
+          Item
           onClick={() => handleMenuItemClick("dropdown1")}
           active={activeLink === "dropdown1"}
         >
@@ -400,9 +402,19 @@ const Sidebar = () => {
           </Item>
         </BottomItem>
       </BottomContainer>
-      <Button onClick={handleToggleSidebar}>
-        {!isSmallScreen ? <FaArrowRight /> : <FaArrowLeft />}
-      </Button>
+      <IconTitleContainer>
+        <Button onClick={handleToggleSidebar}>
+          {!isSmallScreen ? (
+            <IconTitleContainer onClick={handleToggleSidebar}>
+              <FaArrowRight />{" "}
+            </IconTitleContainer>
+          ) : (
+            <IconTitleContainer onClick={handleToggleSidebar}>
+              {/* onClick={handleToggleSidebar}> */} <FaArrowLeft />{" "}
+            </IconTitleContainer>
+          )}
+        </Button>
+      </IconTitleContainer>
     </Wrapper>
   );
 };

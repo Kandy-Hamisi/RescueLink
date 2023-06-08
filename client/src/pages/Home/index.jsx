@@ -1,22 +1,36 @@
-// import styled from "styled-components"
-// import tw from "twin.macro"
 import { FaRegClipboard, FaRegHeart, FaUsers } from "react-icons/fa";
 import styled from "styled-components";
 import tw from "twin.macro";
 import Layout from "../../components/Layout";
+import { VictoryArea, VictoryChart, VictoryPie } from "victory";
+
+const ChartData = [
+  { x: 1, y: 2, y0: 0 },
+  { x: 2, y: 3, y0: 1 },
+  { x: 3, y: 5, y0: 1 },
+  { x: 4, y: 4, y0: 2 },
+  { x: 5, y: 6, y0: 2 },
+];
+const PieChartData = [
+  { x: "Cats", y: 35 },
+  { x: "Dogs", y: 40 },
+  { x: "Birds", y: 55 },
+];
 const num = 800000;
-const Container = styled.section`
+const Wrapper = styled.section`
   ${tw`
-    grid
+  flex
+  flex-col
+    md:grid
     grid-cols-4
     grid-rows-4
     w-full
     h-full
     overflow-x-hidden
     p-4
-    grid-flow-col
-    
+    grid-flow-row
     space-y-4
+    space-x-4
   `}
 `;
 const FiguresCard = styled.div`
@@ -38,6 +52,17 @@ const ChartCard = styled.div`
     border-[#dcdfe4]
     border-[1px]
     p-2
+    pr-0
+  `}
+`;
+const SmallChartCard = styled.div`
+  ${tw`
+    col-span-1
+    row-span-2
+    rounded-lg
+    border-[#dcdfe4]
+    border-[1px]
+    p-2 
     pr-0
   `}
 `;
@@ -63,7 +88,8 @@ const ContentCell = styled.div`
 `;
 const FigureText = styled.span`
   ${tw`
-  text-2xl
+  lg:text-2xl
+  md:text-xl
   flex
   align-middle
   my-auto
@@ -77,12 +103,13 @@ const Icon = styled.div`
   justify-center
   text-2xl
   align-middle
+  
 `}
 `;
 const Home = () => {
   return (
     <Layout>
-      <Container>
+      <Wrapper>
         <FiguresCard>
           <Content>
             <ContentCell>
@@ -109,8 +136,31 @@ const Home = () => {
             </ContentCell>
           </Content>
         </FiguresCard>
-        <ChartCard></ChartCard>
-      </Container>
+
+        <ChartCard>
+          <VictoryChart style={{ padding: "100px" }}>
+            <VictoryArea
+              animate={{
+                duration: 2000,
+                onLoad: { duration: 1000 },
+              }}
+              style={{ data: { fill: "#c43a31" } }}
+              size={900}
+              data={[
+                { x: 1, y: 2, y0: 0 },
+                { x: 2, y: 3, y0: 1 },
+                { x: 3, y: 5, y0: 1 },
+                { x: 4, y: 4, y0: 2 },
+                { x: 5, y: 6, y0: 2 },
+              ]}
+            />
+          </VictoryChart>
+        </ChartCard>
+        <SmallChartCard>
+          <h1>Floods</h1>
+          <VictoryPie data={PieChartData} />
+        </SmallChartCard>
+      </Wrapper>
     </Layout>
   );
 };
