@@ -1,16 +1,17 @@
-import styled from "styled-components"
-import tw from "twin.macro"
+import styled from "styled-components";
+import tw from "twin.macro";
 import Sidebar from "../Sidebar";
 import Navbar from "../Navbar";
 
 const Wrapper = styled.div`
-    ${tw`
+  ${tw`
         flex
+        h-screen
     `}
 `;
 
 const Content = styled.main`
-    ${tw`
+  ${tw`
         flex-1
         ml-[75px]
         md:ml-[150px]
@@ -19,23 +20,22 @@ const Content = styled.main`
 `;
 
 const MainContent = styled.section`
-    ${tw`
-        
+  ${tw`
+        h-full
+        w-full
     `}
-`
+`;
 
 const Layout = ({ children }) => {
   return (
     <Wrapper>
-        <Sidebar />
-        <Content>
-            <Navbar />
-            <MainContent>
-                { children }
-            </MainContent>
-        </Content>
+      <Sidebar />
+      <Content>
+        <Navbar />
+        <MainContent>{children}</MainContent>
+      </Content>
     </Wrapper>
-  )
-}
+  );
+};
 
-export default Layout
+export default Layout;
