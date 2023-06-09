@@ -3,14 +3,15 @@ import styled from "styled-components";
 import tw from "twin.macro";
 import Layout from "../../components/Layout";
 import { VictoryArea, VictoryChart, VictoryPie } from "victory";
+import MainCards from "../../sections/MainCards";
 
-const ChartData = [
-  { x: 1, y: 2, y0: 0 },
-  { x: 2, y: 3, y0: 1 },
-  { x: 3, y: 5, y0: 1 },
-  { x: 4, y: 4, y0: 2 },
-  { x: 5, y: 6, y0: 2 },
-];
+// const ChartData = [
+//   { x: 1, y: 2, y0: 0 },
+//   { x: 2, y: 3, y0: 1 },
+//   { x: 3, y: 5, y0: 1 },
+//   { x: 4, y: 4, y0: 2 },
+//   { x: 5, y: 6, y0: 2 },
+// ];
 const PieChartData = [
   { x: "Cats", y: 35 },
   { x: "Dogs", y: 40 },
@@ -31,17 +32,6 @@ const Wrapper = styled.section`
     grid-flow-row
     space-y-4
     space-x-4
-  `}
-`;
-const FiguresCard = styled.div`
-  ${tw`
-    col-span-3
-    row-span-1
-    rounded-lg
-    border-[#dcdfe4]
-    border-[1px]
-    p-2
-    pr-0
   `}
 `;
 const ChartCard = styled.div`
@@ -66,51 +56,13 @@ const SmallChartCard = styled.div`
     pr-0
   `}
 `;
-const Content = styled.div`
-  ${tw`
-  flex
-  h-full
-  w-full
-  space-x-2
-`}
-`;
-const ContentCell = styled.div`
-  ${tw`
-  flex
-  h-full
-  w-full
-  border-r-[1px]
-  border-[#dcdfe4]
-  justify-center
-  align-middle
-  space-x-8
-`}
-`;
-const FigureText = styled.span`
-  ${tw`
-  lg:text-2xl
-  md:text-xl
-  flex
-  align-middle
-  my-auto
-  font-bold
-`}
-`;
-const Icon = styled.div`
-  ${tw`
-  text-[#347AE2]
-  flex
-  justify-center
-  text-2xl
-  align-middle
-  
-`}
-`;
+
 const Home = () => {
   return (
     <Layout>
       <Wrapper>
-        <FiguresCard>
+        <MainCards />
+        {/* <FiguresCard>
           <Content>
             <ContentCell>
               <FigureText>{num.toLocaleString("en-US")}</FigureText>
@@ -135,7 +87,7 @@ const Home = () => {
               </Icon>
             </ContentCell>
           </Content>
-        </FiguresCard>
+        </FiguresCard> */}
 
         <ChartCard>
           <VictoryChart style={{ padding: "100px" }}>
