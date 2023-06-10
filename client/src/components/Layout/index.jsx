@@ -1,22 +1,22 @@
-import styled from "styled-components"
-import tw from "twin.macro"
+import styled from "styled-components";
+import tw from "twin.macro";
 import Sidebar from "../Sidebar";
 import Navbar from "../Navbar";
 import { useSelector } from "react-redux";
+import { useEffect } from "react";
+import { useState } from "react";
 
 const Wrapper = styled.div`
-    ${tw`
+  ${tw`
         flex
+        h-auto
+        w-full
     `}
 `;
 
 const Content = styled.main`
-    ${tw`
+  ${tw`
         flex-1
-        border
-        border-green-500
-        border-[3px]
-        
     `}
     
 
@@ -26,7 +26,7 @@ const Content = styled.main`
     }
 
     @media(max-width: 767px) {
-        margin-left: 75px;
+        margin-left: 0px;
         
     }
 `;
@@ -35,11 +35,29 @@ const MainContent = styled.section`
     ${tw`
         p-[10px]
     `}
-`
+`;
 
 const Layout = ({ children }) => {
 
+    const [isSmallScreen, setIsSmallScreen] = useState(false);
     const width = useSelector(state => state.width.sidebarWidth);
+    const visibility = useSelector(state => state.width.visibility);
+
+    useEffect(() => {
+        const handleResize = () => {
+            setIsSmallScreen(window.innerWidth < 768); // Adjust the breakpoint as per your requirement
+        };
+
+        window.addEventListener('resize', handleResize);
+
+        // Call handleResize once on component mount
+        handleResize();
+
+        // Clean up the event listener on component unmount
+        return () => {
+            window.removeEventListener('resize', handleResize);
+        };
+    }, []);
 
   return (
     <Wrapper>
@@ -51,7 +69,7 @@ const Layout = ({ children }) => {
             </MainContent>
         </Content>
     </Wrapper>
-  )
-}
+  );
+};
 
-export default Layout
+export default Layout;

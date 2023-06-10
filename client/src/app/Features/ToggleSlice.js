@@ -2,6 +2,7 @@ import { createSlice } from "@reduxjs/toolkit";
 
 const initialState = {
     sidebarWidth: 200,
+    visibility: false,
 };
 
 const toggleSLice = createSlice({
@@ -12,8 +13,11 @@ const toggleSLice = createSlice({
         toggleSidebarWidth: (state, action) => {
             state.sidebarWidth = action.payload;
         },
+        toggleVisibility: (state) => {
+            state.visibility = !state.visibility;
+        }
     },
 });
 
-export const { toggleSidebarWidth } = toggleSLice.actions
+export const { toggleSidebarWidth, toggleVisibility } = toggleSLice.actions
 export default toggleSLice.reducer;

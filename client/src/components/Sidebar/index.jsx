@@ -1,10 +1,10 @@
 import styled from 'styled-components';
 import tw from 'twin.macro';
-import { FaCaretDown, FaCaretRight, FaCog, FaCogs, FaExclamationCircle, FaRegClipboard, FaRegHeart, FaRocketchat, FaThLarge, FaUsersCog } from 'react-icons/fa';
+import { FaCaretDown, FaCaretRight, FaCog, FaCogs, FaExclamationCircle, FaRegClipboard, FaRegHeart, FaRocketchat, FaThLarge, FaTimes, FaUsersCog } from 'react-icons/fa';
 import { BsBoxArrowRight } from 'react-icons/bs'
 import { useEffect, useState } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
-import { toggleSidebarWidth } from '../../app/Features/ToggleSlice';
+import { toggleSidebarWidth, toggleVisibility } from '../../app/Features/ToggleSlice';
 
 
 const Wrapper = styled.aside`
@@ -26,9 +26,11 @@ const Wrapper = styled.aside`
     padding: 30px 20px;
     /* width: ${(props) => (props.isMinimized ? '75px' : '300px')}; */
     transition: 0.3s ease-in-out;
+    
 
     @media (max-width: 767px) {
         width: ${(props) => ((props.isMinimized) ? '75px' : `${props.width}px`)};
+        display: ${(props) => props.visibility ? 'flex' : 'none'} !important;
     }
 
     @media (min-width: 768px) {
@@ -53,6 +55,21 @@ const Button = styled.div`
         cursor-pointer
     `}
 `;
+
+const ExitButton = styled.span`
+    ${tw`
+        absolute
+        top-[30px]
+        -right-[40px]
+        bg-white
+        shadow-lg
+        rounded-full
+        p-2
+        cursor-pointer
+        inline-block
+        md:hidden
+    `}
+`
 
 const LogoContainer = styled.div`
     ${tw`
@@ -190,6 +207,8 @@ const Sidebar = () => {
     const [activeLink, setActiveLink] = useState("dropdown1");
 
     const width = useSelector(state => state.width.sidebarWidth);
+    const visibility = useSelector(state => state.width.visibility);
+
     const dispatch = useDispatch();
 
 
@@ -243,7 +262,7 @@ const Sidebar = () => {
     }, []);
 
   return (
-    <Wrapper isMinimized={isMinimized} isSmallScreen={isSmallScreen} className={isSmallScreen ? `w-[150px]` : `w-[${width}px]`}>
+    <Wrapper isMinimized={isMinimized} visibility={visibility} isSmallScreen={isSmallScreen} className={isSmallScreen ? `w-[150px]` : `w-[${width}px]`}>
         {(isMinimized) ? <LogoContainer>RL</LogoContainer> : <LogoContainer>RescueLink</LogoContainer>}
         <Splitter />
         <NavigationContainer>
@@ -397,6 +416,9 @@ const Sidebar = () => {
                 <FaCaretRight />
             </Caret>
         </Button>
+        <ExitButton>
+            <FaTimes onClick={() => dispatch(toggleVisibility())} />
+        </ExitButton>
     </Wrapper>
   )
 }

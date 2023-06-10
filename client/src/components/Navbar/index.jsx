@@ -1,13 +1,15 @@
-import { FaBell, FaCaretDown, FaSearch } from "react-icons/fa";
-import styled from "styled-components"
-import tw from "twin.macro"
+import { FaBars, FaBell, FaCaretDown, FaSearch } from "react-icons/fa";
+import styled from "styled-components";
+import tw from "twin.macro";
 import { man } from "../../assets";
+import { useDispatch, useSelector } from "react-redux";
+import { toggleVisibility } from "../../app/Features/ToggleSlice";
+
 
 
 const Wrapper = styled.header`
-    ${tw`
-        border
-        border-red-500
+  ${tw`
+        w-full
         h-[100px]
         p-[1.5rem]
         lg:p-[2.5rem]
@@ -15,13 +17,22 @@ const Wrapper = styled.header`
         items-center
         justify-between
         z-10
-        border-b
+        
     `}
 `;
 
 const Left = styled.div`
   ${tw`
     
+  `}
+`;
+
+const Hamburgermenu = styled.span`
+  ${tw`
+    block
+    md:hidden
+    text-[20px]
+    cursor-pointer
   `}
 `
 
@@ -31,6 +42,7 @@ const NavbarTitle = styled.h1`
       md:text-lg
       lg:text-[30px]
       font-bold
+      text-[#1c1b44]
   `}
 `;
 
@@ -46,6 +58,7 @@ const Icons = styled.div`
       lg:flex
       items-center
       hidden
+      text-[#1c1b44]
   `}
 `;
 
@@ -73,9 +86,7 @@ const Profile = styled.img`
     h-[50px]
     w-[50px]
     rounded-full
-    border
-    border-gray-500
-    border-[1px]
+    
   `}
 `;
 
@@ -84,7 +95,6 @@ const UserName = styled.h5`
       hidden
       lg:inline-block    
   `}
-
 `;
 
 const NotificationDot = styled.span`
@@ -97,7 +107,7 @@ const NotificationDot = styled.span`
       right-0
       rounded-full
   `}
-`
+`;
 
 const Caret = styled.span`
   ${tw`
@@ -105,11 +115,24 @@ const Caret = styled.span`
   `}
 `;
 
+
 const Navbar = () => {
+
+  const visibility = useSelector((state) => state.width.visibility);
+  const dispatch = useDispatch();
+
+  const handleSidebarToggle = () => {
+    dispatch(toggleVisibility());
+  }  
+
+  console.log(visibility);
+
   return (
     <Wrapper>
       <Left>
-        <NavbarTitle>Welcome Back, Idriss</NavbarTitle>
+        <Hamburgermenu>
+          <FaBars onClick={handleSidebarToggle} />
+        </Hamburgermenu>
       </Left>
 
       <Right>
@@ -131,7 +154,7 @@ const Navbar = () => {
         </User>
       </Right>
     </Wrapper>
-  )
-}
+  );
+};
 
-export default Navbar
+export default Navbar;
