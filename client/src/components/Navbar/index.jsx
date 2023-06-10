@@ -6,7 +6,8 @@ import { man } from "../../assets";
 
 const Wrapper = styled.header`
     ${tw`
-        w-full
+        border
+        border-red-500
         h-[100px]
         p-[1.5rem]
         lg:p-[2.5rem]
@@ -57,7 +58,7 @@ const Icon = styled.span`
       lg:text-[20px]
 
   `}
-`
+`;
 
 const User = styled.span`
   ${tw`

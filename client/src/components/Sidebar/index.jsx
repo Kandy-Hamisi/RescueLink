@@ -3,6 +3,8 @@ import tw from 'twin.macro';
 import { FaCaretDown, FaCaretRight, FaCog, FaCogs, FaExclamationCircle, FaRegClipboard, FaRegHeart, FaRocketchat, FaThLarge, FaUsersCog } from 'react-icons/fa';
 import { BsBoxArrowRight } from 'react-icons/bs'
 import { useEffect, useState } from 'react';
+import { useDispatch, useSelector } from 'react-redux';
+import { toggleSidebarWidth } from '../../app/Features/ToggleSlice';
 
 
 const Wrapper = styled.aside`
@@ -10,15 +12,15 @@ const Wrapper = styled.aside`
         fixed
         left-0
         top-0
-        w-[75px]
-        md:w-[150px]
-        lg:w-[200px]
         h-screen
         bg-white
         z-10
         border-r
         border-black
         border-r-[2px]
+        flex
+        flex-col
+        flex-1
     `}
 
     padding: 30px 20px;
@@ -26,12 +28,15 @@ const Wrapper = styled.aside`
     transition: 0.3s ease-in-out;
 
     @media (max-width: 767px) {
-        width: ${(props) => (props.isMinimized ? '75px' : '150px')};
+        width: ${(props) => ((props.isMinimized) ? '75px' : `${props.width}px`)};
     }
 
     @media (min-width: 768px) {
-        width: ${(props) => (props.isMinimized ? '75px' : '200px')};
+        width: ${(props) => (props.isMinimized ? '75px' : `${props.width}px`)};
+        
     }
+
+    /* width: ${ (props) => props.width }; */
 `;
 
 const Button = styled.div`
@@ -72,6 +77,8 @@ const NavigationContainer = styled.ul`
         flex-col
         w-full
         mt-[2.5rem]
+        ease-in-out
+        duration-300
     `}
 `;
 
@@ -177,9 +184,14 @@ const BottomItem = styled.li`
 const Sidebar = () => {
 
     const [isSmallScreen, setIsSmallScreen] = useState(false);
+    const [displayIconTexts, setDisplayIconTexts] = useState(false);
     const [isMinimized, setIsMinimized] = useState(false);
     const [showDropDown, setShowDropDown] = useState(null);
     const [activeLink, setActiveLink] = useState("dropdown1");
+
+    const width = useSelector(state => state.width.sidebarWidth);
+    const dispatch = useDispatch();
+
 
     const handleMenuItemClick = (menuItem) => {
         
@@ -195,17 +207,28 @@ const Sidebar = () => {
     const handleToggleSidebar = () => {
         setIsMinimized(!isMinimized);
         setShowDropDown(false);
+
+        // todo: I want to change the width of the sidebar on toggle. default is 200
+
         if (isMinimized) {
-            setIsSmallScreen(false);
+            // setIsSmallScreen(false);
+            setDisplayIconTexts(false);
+            
+            // set the width to 75
+            (isSmallScreen) ? dispatch(toggleSidebarWidth(150)) : dispatch(toggleSidebarWidth(200));
+            console.log("expanded");
         } else {
-            setIsSmallScreen(true);
+            // setIsSmallScreen(true);
+            setDisplayIconTexts(true);
+            dispatch(toggleSidebarWidth(75));
+            console.log("minimized");
         }
     }
     
 
     useEffect(() => {
         const handleResize = () => {
-        setIsSmallScreen(window.innerWidth < 768); // Adjust the breakpoint as per your requirement
+            setIsSmallScreen(window.innerWidth < 768); // Adjust the breakpoint as per your requirement
         };
 
         window.addEventListener('resize', handleResize);
@@ -215,12 +238,12 @@ const Sidebar = () => {
 
         // Clean up the event listener on component unmount
         return () => {
-        window.removeEventListener('resize', handleResize);
+            window.removeEventListener('resize', handleResize);
         };
     }, []);
 
   return (
-    <Wrapper isMinimized={isMinimized}>
+    <Wrapper isMinimized={isMinimized} isSmallScreen={isSmallScreen} className={isSmallScreen ? `w-[150px]` : `w-[${width}px]`}>
         {(isMinimized) ? <LogoContainer>RL</LogoContainer> : <LogoContainer>RescueLink</LogoContainer>}
         <Splitter />
         <NavigationContainer>
@@ -230,7 +253,7 @@ const Sidebar = () => {
                         <Icon>
                             <FaThLarge />
                         </Icon>
-                        {!isSmallScreen && <Title>Dashboard</Title>}
+                        {!displayIconTexts && <Title>Dashboard</Title>}
                     </IconTitleContainer>
                     <Caret>
                     <FaCaretDown />
@@ -255,7 +278,7 @@ const Sidebar = () => {
                         <Icon>
                             <FaRegClipboard />
                         </Icon>
-                        {!isSmallScreen && <Title>Programs</Title>}
+                        {!displayIconTexts && <Title>Programs</Title>}
                     </IconTitleContainer>
                     <Caret>
                         <span className='h-4 w-4 text-xs items-center justify-center bg-red-400 p-[6px] text-white rounded-full inline-flex'>2</span>
@@ -280,7 +303,7 @@ const Sidebar = () => {
                         <Icon>
                             <FaRegHeart />
                         </Icon>
-                        {!isSmallScreen && <Title>Donations</Title>}
+                        {!displayIconTexts && <Title>Donations</Title>}
                     </IconTitleContainer>
                     <Caret>
                     <FaCaretDown />
@@ -305,7 +328,7 @@ const Sidebar = () => {
                         <Icon>
                             <FaUsersCog />
                         </Icon>
-                        {!isSmallScreen && <Title>Volunteers</Title>}
+                        {!displayIconTexts && <Title>Volunteers</Title>}
                     </IconTitleContainer>
                     <Caret>
                     <FaCaretDown />
@@ -330,7 +353,7 @@ const Sidebar = () => {
                         <Icon>
                             <FaCog />
                         </Icon>
-                        {!isSmallScreen && <Title>Settings</Title>}
+                        {!displayIconTexts && <Title>Settings</Title>}
                     </IconTitleContainer>
                 </Item>
             </NavigationItem>
@@ -344,7 +367,7 @@ const Sidebar = () => {
                         <Icon>
                             <FaExclamationCircle />
                         </Icon>
-                        {!isSmallScreen && <Title>Help Center</Title>}
+                        {!displayIconTexts && <Title>Help Center</Title>}
                     </IconTitleContainer>
                 </Item>
             </BottomItem>
@@ -354,7 +377,7 @@ const Sidebar = () => {
                         <Icon>
                             <FaRocketchat />
                         </Icon>
-                        {!isSmallScreen && <Title>Contact Us</Title>}
+                        {!displayIconTexts && <Title>Contact Us</Title>}
                     </IconTitleContainer>
                 </Item>
             </BottomItem>
@@ -364,7 +387,7 @@ const Sidebar = () => {
                         <Icon>
                             <BsBoxArrowRight />
                         </Icon>
-                        {!isSmallScreen && <Title>Logout</Title>}
+                        {!displayIconTexts && <Title>Logout</Title>}
                     </IconTitleContainer>
                 </Item>
             </BottomItem>
