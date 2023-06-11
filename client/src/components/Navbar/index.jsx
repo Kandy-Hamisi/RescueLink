@@ -1,7 +1,11 @@
-import { FaBell, FaCaretDown, FaSearch } from "react-icons/fa";
+import { FaBars, FaBell, FaCaretDown, FaSearch } from "react-icons/fa";
 import styled from "styled-components";
 import tw from "twin.macro";
 import { man } from "../../assets";
+import { useDispatch, useSelector } from "react-redux";
+import { toggleVisibility } from "../../app/Features/ToggleSlice";
+
+
 
 const Wrapper = styled.header`
   ${tw`
@@ -22,6 +26,15 @@ const Left = styled.div`
     
   `}
 `;
+
+const Hamburgermenu = styled.span`
+  ${tw`
+    block
+    md:hidden
+    text-[20px]
+    cursor-pointer
+  `}
+`
 
 const NavbarTitle = styled.h1`
   ${tw`
@@ -102,11 +115,24 @@ const Caret = styled.span`
   `}
 `;
 
+
 const Navbar = () => {
+
+  const visibility = useSelector((state) => state.width.visibility);
+  const dispatch = useDispatch();
+
+  const handleSidebarToggle = () => {
+    dispatch(toggleVisibility());
+  }  
+
+  console.log(visibility);
+
   return (
     <Wrapper>
       <Left>
-        <NavbarTitle>Welcome Back, Idriss</NavbarTitle>
+        <Hamburgermenu>
+          <FaBars onClick={handleSidebarToggle} />
+        </Hamburgermenu>
       </Left>
 
       <Right>

@@ -10,7 +10,8 @@ const FiguresCard = styled.div`
     rounded-lg
     border-[#dcdfe4]
     border-[1px]
-    p-2
+    p-[20px]
+    md:h-[200px]
     pr-0
   `}
 `;
