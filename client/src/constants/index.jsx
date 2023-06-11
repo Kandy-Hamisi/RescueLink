@@ -116,13 +116,13 @@ export const SummaryData = [
     figure: 100,
   },
   {
-    id: 1,
+    id: 2,
     title: "Donors",
     figure: 100,
     icon: "",
   },
   {
-    id: 1,
+    id: 3,
     title: "Programs",
     figure: 100,
   },
