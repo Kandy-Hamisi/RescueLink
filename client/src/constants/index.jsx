@@ -127,11 +127,4 @@ export const SummaryData = [
     figure: 100,
   },
 ];
-export const SummaryIcons = [
-  <FaUsers style={{ marginTop: "auto", marginBottom: "auto" }} />,
-  <FaRegClipboard
-    key={1}
-    style={{ marginTop: "auto", marginBottom: "auto" }}
-  />,
-  <FaRegHeart key={2} style={{ marginTop: "auto", marginBottom: "auto" }} />,
-];
+export const SummaryIcons = ["users", "clipboard", "heart"];

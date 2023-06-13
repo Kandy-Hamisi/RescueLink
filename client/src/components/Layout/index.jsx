@@ -18,56 +18,51 @@ const Content = styled.main`
   ${tw`
         flex-1
     `}
-    
 
-    @media(min-width: 768px) {
-        margin-left: ${(props) => props.width ? `${props.width}px` : null} !important;
-        
-    }
+  @media(min-width: 768px) {
+    margin-left: ${(props) =>
+      props.width ? `${props.width + 20}px` : null} !important;
+  }
 
-    @media(max-width: 767px) {
-        margin-left: 0px;
-        
-    }
+  @media (max-width: 767px) {
+    margin-left: 0px;
+  }
 `;
 
 const MainContent = styled.section`
-    ${tw`
+  ${tw`
         p-[10px]
     `}
 `;
 
 const Layout = ({ children }) => {
+  const [isSmallScreen, setIsSmallScreen] = useState(false);
+  const width = useSelector((state) => state.width.sidebarWidth);
+  const visibility = useSelector((state) => state.width.visibility);
 
-    const [isSmallScreen, setIsSmallScreen] = useState(false);
-    const width = useSelector(state => state.width.sidebarWidth);
-    const visibility = useSelector(state => state.width.visibility);
+  useEffect(() => {
+    const handleResize = () => {
+      setIsSmallScreen(window.innerWidth < 768); // Adjust the breakpoint as per your requirement
+    };
 
-    useEffect(() => {
-        const handleResize = () => {
-            setIsSmallScreen(window.innerWidth < 768); // Adjust the breakpoint as per your requirement
-        };
+    window.addEventListener("resize", handleResize);
 
-        window.addEventListener('resize', handleResize);
+    // Call handleResize once on component mount
+    handleResize();
 
-        // Call handleResize once on component mount
-        handleResize();
-
-        // Clean up the event listener on component unmount
-        return () => {
-            window.removeEventListener('resize', handleResize);
-        };
-    }, []);
+    // Clean up the event listener on component unmount
+    return () => {
+      window.removeEventListener("resize", handleResize);
+    };
+  }, []);
 
   return (
     <Wrapper>
-        <Sidebar />
-        <Content width={width}>
-            <Navbar />
-            <MainContent>
-                { children }
-            </MainContent>
-        </Content>
+      <Sidebar />
+      <Content width={width}>
+        <Navbar />
+        <MainContent>{children}</MainContent>
+      </Content>
     </Wrapper>
   );
 };

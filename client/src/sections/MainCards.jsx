@@ -1,3 +1,4 @@
+import FeatherIcon from "feather-icons-react/build/FeatherIcon";
 import { FaIcons, FaUsers } from "react-icons/fa";
 import styled from "styled-components";
 import tw from "twin.macro";
@@ -52,7 +53,12 @@ const Icon = styled.div`
   justify-center
   text-2xl
   align-middle
-  
+  my-auto
+  rounded-lg
+  shadow-lg
+  shadow-gray-100
+  p-3
+
 `}
 `;
 
@@ -63,7 +69,9 @@ const MainCards = () => {
         {SummaryData.map((item, index) => (
           <ContentCell key={item.id}>
             <FigureText>{item.figure.toLocaleString("en-US")}</FigureText>
-            <Icon>{SummaryIcons[index]}</Icon>
+            <Icon>
+              <FeatherIcon icon={SummaryIcons[index]} size={30} />
+            </Icon>
           </ContentCell>
         ))}
       </Content>
