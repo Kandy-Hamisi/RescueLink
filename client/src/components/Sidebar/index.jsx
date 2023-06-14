@@ -177,7 +177,7 @@ const IconTitleContainer = styled.span`
 const Icon = styled.span`
   ${tw`
         text-[18px]
-        mr-[15px]
+        mr-[4px]
       
     `}
 `;
