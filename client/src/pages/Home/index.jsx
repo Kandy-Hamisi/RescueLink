@@ -1,4 +1,3 @@
-import { FaRegClipboard, FaRegHeart, FaUsers } from "react-icons/fa";
 import styled from "styled-components";
 import tw from "twin.macro";
 import Layout from "../../components/Layout";
@@ -24,8 +23,7 @@ const Wrapper = styled.section`
     flex-col
     w-full
 
-  `}
-  /* md:grid
+  `}/* md:grid
     grid-cols-4
     grid-rows-4
     w-full
@@ -45,7 +43,7 @@ const ChatsContainer = styled.div`
     mt-6
     gap-8
   `}
-`
+`;
 
 const ChartCard = styled.div`
   ${tw`
@@ -59,9 +57,7 @@ const ChartCard = styled.div`
     md:mt-0
     mb-6
     lg:mb-0
-  `}
-
-    /* col-span-3
+  `}/* col-span-3
     row-span-2 */
 `;
 const SmallChartCard = styled.div`
@@ -72,9 +68,7 @@ const SmallChartCard = styled.div`
     border-[1px]
     p-2 
     pr-0
-  `}
-
-    /* col-span-1
+  `}/* col-span-1
     row-span-2 */
 `;
 

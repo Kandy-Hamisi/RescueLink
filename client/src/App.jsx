@@ -1,9 +1,9 @@
-import { Home } from './pages'
+import { Home } from "./pages";
 import React from "react";
 import Login from "./pages/Login";
 import Signup from "./pages/Signup";
-import { Provider } from 'react-redux';
-import store from './app/Store/store';
+import { Provider } from "react-redux";
+import store from "./app/Store/store";
 import {
   Route,
   Routes,
@@ -13,16 +13,6 @@ import {
   BrowserRouter,
 } from "react-router-dom";
 
-// const router = createBrowserRouter(
-//   createRoutesFromElements(
-//     <BrowserRouter>
-//       <Routes path="/" element={<Home />}>
-//         <Route path="login" element={<Login />} />
-//         <Route path="signup" element={<Signup />} />
-//       </Routes>
-//     </BrowserRouter>
-//   )
-// );
 const App = () => {
   return (
     <>
@@ -34,7 +24,7 @@ const App = () => {
         </Routes>
       </Provider>
     </>
-  )
+  );
 };
 
 export default App;

@@ -1,8 +1,107 @@
 import React, { useState } from "react";
 import { Link } from "react-router-dom";
+import styled from "styled-components";
+import tw from "twin.macro";
 import { doCreateUserWithEmailAndPassword } from "../../firebase/auth";
 import { auth, firestore } from "../../firebase/firebase";
 import { addUser } from "../../firebase/firestore";
+
+const Wrapper = styled.div`
+  ${tw`
+  flex
+    w-full
+    h-full
+    bg-[#F2F2F2]
+    justify-center
+  `}
+  height: 100vh;
+  width: 100vw;
+`;
+const Container = styled.div`
+  ${tw`
+    bg-white
+    my-auto
+    flex
+    flex-col
+    px-16
+    py-0
+    pb-6
+    pt-0
+    space-y-4
+  `}
+  width: 48%;
+  height: 97%;
+  border-radius: 12px;
+`;
+const HeaderContainer = styled.div`
+  ${tw`
+    my-auto
+    flex
+    flex-col
+    space-y-2
+    py-0
+  `}
+`;
+const Title = styled.h2`
+  ${tw`
+    md:text-2xl
+    text-center
+    text-[#0B0A37]
+    font-semibold
+    py-0
+  `}
+`;
+const Subtitle = styled.h2`
+  ${tw`
+  text-xs
+    md:text-sm
+    text-center
+    text-[#7C8DB5]
+    font-semibold
+  `}
+`;
+const TextField = styled.input`
+  ${tw`
+    // bg-[#f0f0f0]
+    py-2
+    px-4
+    border-[#f0f0f0]
+    border-solid
+    border-2
+    rounded-md
+    focus:outline-[#347AE2]
+     
+  `}
+`;
+const ContinueButton = styled.button`
+  ${tw`
+    bg-[#347AE2]
+    p-2
+    text-white
+    rounded-md
+    active:bg-[#0B0A37]
+  `}
+`;
+const LinkContainer = styled.span`
+  ${tw`
+    flex
+    space-x-2
+    justify-center
+  `}
+`;
+const LinkText = styled.span`
+  ${tw`
+    text-[#0B0A37]
+  `}
+`;
+const LoginLink = styled.span`
+  ${tw`
+    text-[#347AE2]
+    font-semibold
+    underline
+    cursor-pointer
+  `}
+`;
 
 const Signup = () => {
   //   const router = useRouter();
@@ -10,9 +109,18 @@ const Signup = () => {
   const [password, setPassword] = useState("");
   const [confirmPassword, setConfirmPassword] = useState("");
   const [fullname, setFullname] = useState("");
+  const [phoneNumber, setPhoneNumber] = useState();
   const [IDnum, setIDnum] = useState();
   const [isLoading, setIsLoading] = useState(false);
 
+  const handleIDChange = (e) => {
+    const { value } = e.target;
+    // Remove non-digit characters from the input
+    const cleanedValue = value.replace(/\D/g, "");
+    // Limit the input to 8 digits
+    const truncatedValue = cleanedValue.slice(0, 8);
+    setIDnum(truncatedValue);
+  };
   const passwordCheck = () => {
     if (password === confirmPassword) {
       return true;
@@ -20,8 +128,8 @@ const Signup = () => {
       return false;
     }
   };
-
-  const signUp = async () => {
+  // Signup function
+  const handleSignUp = async () => {
     setIsLoading(true);
     if (passwordCheck()) {
       auth.createUserWithEmailAndPassword(email, password).then((authUser) => {
@@ -35,9 +143,11 @@ const Signup = () => {
             IDnum: IDnum,
             admin: false,
             uid: authUser.user.uid,
+            phoneNumber: phoneNumber,
           })
           .then(() => {
             console.log("user added to database!");
+            window.location.href = "/login";
             // router.push("/login");
           });
       });
@@ -45,67 +155,58 @@ const Signup = () => {
   };
 
   return (
-    <div className=" min-h-screen w-screen bg-bg_color">
-      <div className="flex flex-col space-y-8 w-1/4 mx-auto   ">
-        <div className="mx-auto w-64 h-48 overflow-hidden"></div>
-        <h1 className="text-dark_blue  font-khand font-bold text-center text-4xl ">
-          Sign Up
-        </h1>
-        <input
-          onChange={(value) => {
-            setFullname(value.target.value);
-          }}
-          className="bg-white text-black h-10 p-3 rounded-lg focus:outline-none"
+    <Wrapper>
+      <Container>
+        <HeaderContainer>
+          <Title>Sign Up</Title>
+          <Subtitle>Create a new account</Subtitle>
+        </HeaderContainer>
+
+        <TextField
           placeholder="Full Name"
+          type="text"
+          value={fullname}
+          onChange={(e) => setFullname(e.target.value)}
         />
-        <input
-          onChange={(value) => {
-            setEmail(value.target.value);
-          }}
-          className="bg-white text-black h-10 p-3 rounded-lg focus:outline-none"
+        <TextField
           placeholder="Email"
+          type="email"
+          value={email}
+          onChange={(e) => setEmail(e.target.value)}
         />
-        <input
-          onChange={(value) => {
-            setIDnum(value.target.value);
-          }}
-          className="bg-white text-black h-10 p-3 rounded-lg focus:outline-none"
+        <TextField
+          placeholder="Password"
+          type="password"
+          value={password}
+          onChange={(e) => setPassword(e.target.value)}
+        />
+        <TextField
+          placeholder="Confirm Password"
+          type="password"
+          value={confirmPassword}
+          onChange={(e) => setConfirmPassword(e.target.value)}
+        />
+        <TextField
+          placeholder="Phone Number"
+          type="tel"
+          value={phoneNumber}
+          onChange={(e) => setPhoneNumber(e.target.value)}
+        />
+        <TextField
           placeholder="ID number"
           type="number"
+          value={IDnum}
+          onChange={handleIDChange}
         />
-        <input
-          onChange={(value) => {
-            setPassword(value.target.value);
-          }}
-          className="bg-white text-black h-10 p-3 rounded-lg focus:outline-none"
-          type="password"
-          placeholder="Password"
-        />
-        <input
-          onChange={(value) => {
-            setConfirmPassword(value.target.value);
-          }}
-          className="bg-white text-black h-10 p-3 rounded-lg focus:outline-none"
-          type="password"
-          placeholder="Confirm Password"
-        />
-        <button
-          onClick={signUp}
-          className="border-4 bg-pink_red text-white p-2 w-3/4 mx-auto rounded-xl"
-        >
-          {isLoading ? "Loading..." : "Continue"}
-        </button>
-        {/* Login Link */}
-        <div className="flex space-x-2 mx-auto pb-4">
-          <span className="text-dark_blue">{"Already have an Account? "}</span>
+        <ContinueButton onClick={handleSignUp}>Continue</ContinueButton>
+        <LinkContainer>
+          <LinkText>Already have an account?</LinkText>
           <Link to="/login">
-            <span className="text-pink_red underline cursor-pointer">
-              Log In
-            </span>
+            <LoginLink>Login</LoginLink>
           </Link>
-        </div>
-      </div>
-    </div>
+        </LinkContainer>
+      </Container>
+    </Wrapper>
   );
 };
 
