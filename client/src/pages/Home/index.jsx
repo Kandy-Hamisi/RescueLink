@@ -1,9 +1,10 @@
-import { FaRegClipboard, FaRegHeart, FaUsers } from "react-icons/fa";
 import styled from "styled-components";
 import tw from "twin.macro";
 import Layout from "../../components/Layout";
 import { VictoryArea, VictoryChart, VictoryPie } from "victory";
 import MainCards from "../../sections/MainCards";
+import { useDispatch, useSelector } from "react-redux";
+import { useEffect } from "react";
 
 // const ChartData = [
 //   { x: 1, y: 2, y0: 0 },
@@ -24,8 +25,7 @@ const Wrapper = styled.section`
     flex-col
     w-full
 
-  `}
-  /* md:grid
+  `}/* md:grid
     grid-cols-4
     grid-rows-4
     w-full
@@ -45,7 +45,7 @@ const ChatsContainer = styled.div`
     mt-6
     gap-8
   `}
-`
+`;
 
 const ChartCard = styled.div`
   ${tw`
@@ -59,9 +59,7 @@ const ChartCard = styled.div`
     md:mt-0
     mb-6
     lg:mb-0
-  `}
-
-    /* col-span-3
+  `}/* col-span-3
     row-span-2 */
 `;
 const SmallChartCard = styled.div`
@@ -72,13 +70,18 @@ const SmallChartCard = styled.div`
     border-[1px]
     p-2 
     pr-0
-  `}
-
-    /* col-span-1
+  `}/* col-span-1
     row-span-2 */
 `;
 
 const Home = () => {
+  // const dispatch = useDispatch();
+  // const currentUser = useSelector((state) => state.currentUser);
+
+  // useEffect(() => {
+  //   dispatch(getUser)
+  // }, [dispatch])
+
   return (
     <Layout>
       <Wrapper>
@@ -107,6 +110,13 @@ const Home = () => {
           <SmallChartCard>
             <h1>Floods</h1>
             <VictoryPie data={PieChartData} />
+            <button
+              onClick={() => {
+                // console.log(currentUser);
+              }}
+            >
+              View More
+            </button>
           </SmallChartCard>
         </ChatsContainer>
       </Wrapper>

@@ -1,4 +1,9 @@
 import { firestore } from "./firebase";
+// import {
+//   setUserError,
+//   setUserLoading,
+//   setUserSuccess,
+// } from "../app/Features/ToggleSlice";
 
 function addUser(email, uid, fullname, IDnum, isAdmin) {
   firestore.collection("users").doc(uid).set({
