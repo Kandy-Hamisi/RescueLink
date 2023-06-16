@@ -12,13 +12,22 @@ import {
   RouterProvider,
   BrowserRouter,
 } from "react-router-dom";
+import AuthCheck from "./app/Features/AuthCheck";
 
 const App = () => {
   return (
     <>
       <Provider store={store}>
         <Routes>
-          <Route exact path="/" element={<Home />} />
+          <Route
+            exact
+            path="/"
+            element={
+              <AuthCheck>
+                <Home />
+              </AuthCheck>
+            }
+          />
           <Route path="/login" element={<Login />} />
           <Route path="/signup" element={<Signup />} />
         </Routes>

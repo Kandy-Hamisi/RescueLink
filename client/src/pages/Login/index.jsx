@@ -1,7 +1,10 @@
 import React, { useEffect, useState } from "react";
-import { Link } from "react-router-dom";
+import { useDispatch } from "react-redux";
+import { Link, useNavigate } from "react-router-dom";
 import styled from "styled-components";
 import tw from "twin.macro";
+import { LoginAction } from "../../app/api_calls";
+
 import { auth } from "../../firebase/firebase";
 
 const Wrapper = styled.div`
@@ -108,16 +111,30 @@ const Login = () => {
   const [isLoading, setIsLoading] = useState(false);
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
+  const navigate = useNavigate();
+  const dispatch = useDispatch();
 
   const handleLogin = async () => {
     setIsLoading(true);
-    auth.signInWithEmailAndPassword(email, password).then((userCredential) => {
-      // Signed in
-      const user = userCredential.user;
-      console.log(user);
-      window.location.href = "/";
-      // ...
-    });
+    try {
+      // dispatch(LoginAction(dispatch, { email, password }));
+      LoginAction(dispatch, { email, password });
+      setIsLoading(false);
+      // window.location.href = "/";
+      navigate("/");
+    } catch (err) {
+      setIsLoading(false);
+      console.log(err);
+    }
+
+    // window.location.href = "/";
+    // auth.signInWithEmailAndPassword(email, password).then((userCredential) => {
+    //   // Signed in
+    //   const user = userCredential.user;
+    //   console.log(user);
+    //   window.location.href = "/";
+    //   // ...
+    // });
   };
 
   useEffect(() => {}, []);
@@ -145,7 +162,9 @@ const Login = () => {
           onChange={(e) => setPassword(e.target.value)}
         />
 
-        <ContinueButton onClick={handleLogin}>Continue</ContinueButton>
+        <ContinueButton onClick={handleLogin}>
+          {isLoading ? "Loading..." : "Continue"}
+        </ContinueButton>
 
         <LinkContainer>
           <LinkText>{"Don't have an account?"}</LinkText>
@@ -153,6 +172,15 @@ const Login = () => {
             <LoginLink>Sign Up</LoginLink>
           </Link>
         </LinkContainer>
+        <button
+          onClick={() =>
+            auth.signOut().then(() => {
+              console.log("signed out");
+            })
+          }
+        >
+          Sign Out
+        </button>
       </Container>
     </Wrapper>
   );

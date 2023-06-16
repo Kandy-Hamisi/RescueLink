@@ -3,6 +3,8 @@ import tw from "twin.macro";
 import Layout from "../../components/Layout";
 import { VictoryArea, VictoryChart, VictoryPie } from "victory";
 import MainCards from "../../sections/MainCards";
+import { useDispatch, useSelector } from "react-redux";
+import { useEffect } from "react";
 
 // const ChartData = [
 //   { x: 1, y: 2, y0: 0 },
@@ -73,6 +75,13 @@ const SmallChartCard = styled.div`
 `;
 
 const Home = () => {
+  // const dispatch = useDispatch();
+  // const currentUser = useSelector((state) => state.currentUser);
+
+  // useEffect(() => {
+  //   dispatch(getUser)
+  // }, [dispatch])
+
   return (
     <Layout>
       <Wrapper>
@@ -101,6 +110,13 @@ const Home = () => {
           <SmallChartCard>
             <h1>Floods</h1>
             <VictoryPie data={PieChartData} />
+            <button
+              onClick={() => {
+                // console.log(currentUser);
+              }}
+            >
+              View More
+            </button>
           </SmallChartCard>
         </ChatsContainer>
       </Wrapper>
