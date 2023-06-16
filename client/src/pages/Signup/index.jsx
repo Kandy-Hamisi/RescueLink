@@ -1,5 +1,5 @@
 import React, { useState } from "react";
-import { Link } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 import styled from "styled-components";
 import tw from "twin.macro";
 import { doCreateUserWithEmailAndPassword } from "../../firebase/auth";
@@ -112,6 +112,7 @@ const Signup = () => {
   const [phoneNumber, setPhoneNumber] = useState();
   const [IDnum, setIDnum] = useState();
   const [isLoading, setIsLoading] = useState(false);
+  const navigate = useNavigate();
 
   const handleIDChange = (e) => {
     const { value } = e.target;
@@ -147,7 +148,7 @@ const Signup = () => {
           })
           .then(() => {
             console.log("user added to database!");
-            window.location.href = "/login";
+            navigate("/login");
             // router.push("/login");
           });
       });
