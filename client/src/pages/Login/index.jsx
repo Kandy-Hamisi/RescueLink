@@ -4,6 +4,7 @@ import { Link, useNavigate } from "react-router-dom";
 import styled from "styled-components";
 import tw from "twin.macro";
 import { LoginAction } from "../../app/api_calls";
+import { sleep } from "../../constants/functions";
 
 import { auth } from "../../firebase/firebase";
 
@@ -95,12 +96,18 @@ const LinkContainer = styled.span`
 `;
 const LinkText = styled.span`
   ${tw`
+    text-sm
+    md:text-base
     text-[#0B0A37]
+    text-center
+    align-middle
   `}
 `;
 const LoginLink = styled.span`
   ${tw`
     text-[#347AE2]
+    text-sm
+    md:text-base
     font-semibold
     underline
     cursor-pointer
@@ -114,16 +121,29 @@ const Login = () => {
   const navigate = useNavigate();
   const dispatch = useDispatch();
 
+  useEffect(() => {
+    const clearLocalstorage = (user) => {
+      localStorage.clear();
+    };
+    // clearLocalstorage();
+  }, []);
+
   const handleLogin = async () => {
     setIsLoading(true);
     try {
       // dispatch(LoginAction(dispatch, { email, password }));
-      LoginAction(dispatch, { email, password });
-      setIsLoading(false);
-      // window.location.href = "/";
-      navigate("/");
+      LoginAction(dispatch, { email, password }).then((user) => {
+        setIsLoading(false);
+        console.log("logged in");
+        //Wait one second before attempting to navigate to the home page
+        sleep(1000).then(() => {
+          navigate("/");
+          console.log("navigated");
+        });
+      });
     } catch (err) {
       setIsLoading(false);
+      resetFields();
       console.log(err);
     }
 
@@ -136,8 +156,10 @@ const Login = () => {
     //   // ...
     // });
   };
-
-  useEffect(() => {}, []);
+  const resetFields = () => {
+    setEmail("");
+    setPassword("");
+  };
 
   return (
     <Wrapper>
@@ -172,7 +194,7 @@ const Login = () => {
             <LoginLink>Sign Up</LoginLink>
           </Link>
         </LinkContainer>
-        <button
+        {/* <button
           onClick={() =>
             auth.signOut().then(() => {
               console.log("signed out");
@@ -180,7 +202,7 @@ const Login = () => {
           }
         >
           Sign Out
-        </button>
+        </button> */}
       </Container>
     </Wrapper>
   );

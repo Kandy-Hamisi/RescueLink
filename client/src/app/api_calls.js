@@ -1,5 +1,5 @@
 import { auth, firestore } from "../firebase/firebase";
-import { setUserSuccess } from "./Features/CurrentuserSlice";
+import { setUserError, setUserSuccess } from "./Features/CurrentuserSlice";
 
 export const LoginAction = async(dispatch,{email,password}) => {
     // dispatch(setUserLoading(true));
@@ -16,11 +16,24 @@ export const LoginAction = async(dispatch,{email,password}) => {
                
                  dispatch(setUserSuccess(data));
                 //  dispatch(setUserLoading(false));
-                 console.log('done')
-                //add check if data is undefine
+               console.log('done')
+               return data;
+                //save data to storage
             })
           })
     }catch (error) {
         console.log("failed error is: " + error.message);
     }
+}
+export const logoutAction = async (dispatch) => { 
+  auth.signOut().then(() => {
+    // Sign-out successful.
+    console.log('signout')
+    dispatch(setUserSuccess(null));
+  }).catch((error) => {
+    // An error happened.
+    setUserError(error.message);
+    console.log("failed error is: " + error.message);
+  });
+
 }

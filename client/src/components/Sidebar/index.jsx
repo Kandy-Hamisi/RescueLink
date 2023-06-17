@@ -25,6 +25,7 @@ import Logo from "../../assets/images/Logo.png";
 import LogoWithText from "../../assets/images/Logo_plus_text.png";
 // icons imports
 import FeatherIcon from "feather-icons-react";
+import { logoutAction } from "../../app/api_calls";
 
 const Wrapper = styled.aside`
   ${tw`
@@ -42,7 +43,7 @@ const Wrapper = styled.aside`
         flex-1
     `}
 
-  padding: 30px 20px;
+  padding: 10px 20px;
   /* width: ${(props) => (props.isMinimized ? "75px" : "300px")}; */
   transition: 0.3s ease-in-out;
 
@@ -62,7 +63,7 @@ const Button = styled.div`
   ${tw`
         absolute
         p-[10px]
-        bg-blue-500
+       
         bottom-0
         left-0
         w-full
@@ -77,9 +78,13 @@ const ExitButton = styled.span`
   ${tw`
         absolute
         top-[30px]
-        -right-[40px]
+        text-[#0B0A37]
+        hover:text-[#347AE2]
+        -right-[50px]
         bg-white
-        shadow-lg
+        border
+        border-[#e8eaed]
+        border-[2px]
         rounded-full
         p-2
         cursor-pointer
@@ -101,7 +106,7 @@ const Splitter = styled.hr`
         h-0
         border
         border-gray-300
-        my-[1.5rem]
+        
     `}
 `;
 
@@ -110,7 +115,7 @@ const NavigationContainer = styled.ul`
         flex
         flex-col
         w-full
-        mt-[2.5rem]
+        mt-[2rem]
         ease-in-out
         duration-300
     `}
@@ -118,10 +123,12 @@ const NavigationContainer = styled.ul`
 
 const NavigationItem = styled.li`
   ${tw`
-        flex justify-between
-        mb-[2.5rem]
+        flex 
+        justify-between
+        mb-[1.5rem]
         cursor-pointer
         relative
+        hover:text-[#347AE2]
     `}
 
   color: ${(props) => (props.active ? "#347AE2" : "#7C8DB5")};
@@ -167,10 +174,20 @@ const Item = styled.div`
     `}
 `;
 
-const IconTitleContainer = styled.span`
+const IconTitleContainer = styled.button`
   ${tw`
         flex
         items-center
+        justify-center
+    `}
+`;
+const LogoutIconTitleContainer = styled.button`
+  ${tw`
+        flex
+        items-center
+        justify-center
+        text-red-300
+        hover:text-red-600
     `}
 `;
 
@@ -178,6 +195,14 @@ const Icon = styled.span`
   ${tw`
         text-[18px]
         mr-[4px]
+      
+    `}
+`;
+const ChevronIcon = styled.span`
+  ${tw`
+        text-[18px]
+        mr-[4px]
+        text-[#7C8DB5]
       
     `}
 `;
@@ -197,7 +222,7 @@ const Caret = styled.span`
 
 const BottomContainer = styled.ul`
   ${tw`
-        mt-[1.5rem]
+        mt-[2rem]
         flex
         flex-col
     `}
@@ -205,8 +230,9 @@ const BottomContainer = styled.ul`
 
 const BottomItem = styled.li`
   ${tw`
-        mb-[2.5rem]
+        mb-[1.5rem]
         cursor-pointer
+        hover:text-[#347AE2]
     `}
 
   color: ${(props) => (props.active ? "#347AE2" : "#7C8DB5")};
@@ -223,6 +249,11 @@ const Sidebar = () => {
   const visibility = useSelector((state) => state.width.visibility);
 
   const dispatch = useDispatch();
+
+  const handleLogout = async () => {
+    console.log("logout");
+    await logoutAction(dispatch);
+  };
 
   const handleMenuItemClick = (menuItem) => {
     setActiveLink(menuItem);
@@ -460,22 +491,40 @@ const Sidebar = () => {
         </BottomItem>
         <BottomItem>
           <Item>
-            <IconTitleContainer>
+            <LogoutIconTitleContainer
+              onClick={async () => {
+                handleLogout();
+              }}
+            >
               <Icon>
-                <BsBoxArrowRight />
+                <FeatherIcon icon="log-out" />
               </Icon>
               {!displayIconTexts && <Title>Logout</Title>}
-            </IconTitleContainer>
+            </LogoutIconTitleContainer>
           </Item>
         </BottomItem>
       </BottomContainer>
-      <Button onClick={handleToggleSidebar}>
+      <IconTitleContainer>
+        <ChevronIcon onClick={handleToggleSidebar}>
+          {!displayIconTexts ? (
+            <FeatherIcon icon="chevron-left" />
+          ) : (
+            <FeatherIcon icon="chevron-right" />
+          )}
+        </ChevronIcon>
+      </IconTitleContainer>
+      {/* <Button onClick={handleToggleSidebar}>
         <Caret>
-          <FaCaretRight />
+          {!displayIconTexts ? (
+            <FeatherIcon icon="left" />
+          ) : (
+            <FeatherIcon icon="right" />
+          )}
         </Caret>
-      </Button>
+      </Button> */}
       <ExitButton>
-        <FaTimes onClick={() => dispatch(toggleVisibility())} />
+        {/* <FaTimes onClick={() => dispatch(toggleVisibility())} /> */}
+        <FeatherIcon icon="x" onClick={() => dispatch(toggleVisibility())} />
       </ExitButton>
     </Wrapper>
   );

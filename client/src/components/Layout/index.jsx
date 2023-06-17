@@ -39,11 +39,15 @@ const Layout = ({ children }) => {
   const [isSmallScreen, setIsSmallScreen] = useState(false);
   const width = useSelector((state) => state.width.sidebarWidth);
   const visibility = useSelector((state) => state.width.visibility);
-
+  const currentUser = useSelector((state) => state.currentUser.data);
   useEffect(() => {
     const handleResize = () => {
       setIsSmallScreen(window.innerWidth < 768); // Adjust the breakpoint as per your requirement
     };
+    const saveToLocalStorage = (user) => {
+      localStorage.setItem("user", JSON.stringify(user));
+    };
+    saveToLocalStorage(currentUser);
 
     window.addEventListener("resize", handleResize);
 

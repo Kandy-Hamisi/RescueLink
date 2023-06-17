@@ -22,7 +22,8 @@ const Wrapper = styled.header`
 
 const Left = styled.div`
   ${tw`
-    
+    text-[#0B0A37]
+    hover:text-[#347AE2]
   `}
 `;
 
@@ -32,6 +33,7 @@ const Hamburgermenu = styled.span`
     md:hidden
     text-[20px]
     cursor-pointer
+    hover:text-[#347AE2]
   `}
 `;
 
@@ -128,7 +130,8 @@ const Navbar = () => {
     <Wrapper>
       <Left>
         <Hamburgermenu>
-          <FaBars onClick={handleSidebarToggle} />
+          {/* <FaBars onClick={handleSidebarToggle} /> */}
+          <FeatherIcon onClick={handleSidebarToggle} icon="menu" />
         </Hamburgermenu>
       </Left>
 
