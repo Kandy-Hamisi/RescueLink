@@ -8,17 +8,7 @@ const AuthCheck = ({ children }) => {
   // const [currentUser, setCurrentUser] = useState();
   const loading = useSelector((state) => state.currentUser.loading);
   console.log(currentUser);
-  // console.log(user);
 
-  // useEffect(() => {
-  //   const getUserFromLocalStorage = () => {
-  //     const user = localStorage.getItem("user");
-  //     if (user) {
-  //       setCurrentUser(JSON.parse(user));
-  //     }
-  //   };
-  //   getUserFromLocalStorage();
-  // }, []);
   if (loading) {
     return (
       <div className="flex h-full w-full justify-center">

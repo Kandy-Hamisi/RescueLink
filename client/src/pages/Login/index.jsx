@@ -136,7 +136,7 @@ const Login = () => {
         setIsLoading(false);
         console.log("logged in");
         //Wait one second before attempting to navigate to the home page
-        sleep(1000).then(() => {
+        sleep(3000).then(() => {
           navigate("/");
           console.log("navigated");
         });
