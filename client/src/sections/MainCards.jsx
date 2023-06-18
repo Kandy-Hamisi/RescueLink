@@ -44,6 +44,7 @@ const FigureText = styled.span`
   align-middle
   my-auto
   font-bold
+  text-[#0B0A37]
 `}
 `;
 const Icon = styled.div`

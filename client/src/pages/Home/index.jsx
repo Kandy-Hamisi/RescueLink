@@ -5,6 +5,8 @@ import { VictoryArea, VictoryChart, VictoryPie } from "victory";
 import MainCards from "../../sections/MainCards";
 import { useDispatch, useSelector } from "react-redux";
 import { useEffect } from "react";
+import "tailwindcss/tailwind.css";
+import AuthCheck from "../../app/Features/AuthCheck";
 
 // const ChartData = [
 //   { x: 1, y: 2, y0: 0 },
@@ -35,6 +37,16 @@ const Wrapper = styled.section`
     grid-flow-row
     space-y-4
     space-x-4 */
+`;
+const Greeting = styled.h1`
+  ${tw`
+  text-lg
+    md:text-2xl
+    pb-10
+    font-Poppins
+    text-[#0B0A37]
+font-semibold
+  `}
 `;
 
 const ChatsContainer = styled.div`
@@ -77,49 +89,54 @@ const SmallChartCard = styled.div`
 const Home = () => {
   // const dispatch = useDispatch();
   // const currentUser = useSelector((state) => state.currentUser);
-
+  const currentUser = useSelector((state) => state.currentUser.data);
   // useEffect(() => {
   //   dispatch(getUser)
   // }, [dispatch])
 
   return (
     <Layout>
-      <Wrapper>
-        <MainCards />
+      {/* authcheck has to be passed inside the page component because it checks local storage for user object */}
+      {/* and the local storage is updated in the layout component */}
+      <AuthCheck>
+        <Wrapper>
+          <Greeting>Welcome back, {currentUser?.fullname}</Greeting>
+          <MainCards />
 
-        <ChatsContainer>
-          <ChartCard>
-            <VictoryChart style={{ padding: "100px" }}>
-              <VictoryArea
-                animate={{
-                  duration: 2000,
-                  onLoad: { duration: 1000 },
+          <ChatsContainer>
+            <ChartCard>
+              <VictoryChart style={{ padding: "100px" }}>
+                <VictoryArea
+                  animate={{
+                    duration: 2000,
+                    onLoad: { duration: 1000 },
+                  }}
+                  style={{ data: { fill: "#c43a31" } }}
+                  size={900}
+                  data={[
+                    { x: 1, y: 2, y0: 0 },
+                    { x: 2, y: 3, y0: 1 },
+                    { x: 3, y: 5, y0: 1 },
+                    { x: 4, y: 4, y0: 2 },
+                    { x: 5, y: 6, y0: 2 },
+                  ]}
+                />
+              </VictoryChart>
+            </ChartCard>
+            <SmallChartCard>
+              <h1>Floods</h1>
+              <VictoryPie data={PieChartData} />
+              <button
+                onClick={() => {
+                  // console.log(currentUser);
                 }}
-                style={{ data: { fill: "#c43a31" } }}
-                size={900}
-                data={[
-                  { x: 1, y: 2, y0: 0 },
-                  { x: 2, y: 3, y0: 1 },
-                  { x: 3, y: 5, y0: 1 },
-                  { x: 4, y: 4, y0: 2 },
-                  { x: 5, y: 6, y0: 2 },
-                ]}
-              />
-            </VictoryChart>
-          </ChartCard>
-          <SmallChartCard>
-            <h1>Floods</h1>
-            <VictoryPie data={PieChartData} />
-            <button
-              onClick={() => {
-                // console.log(currentUser);
-              }}
-            >
-              View More
-            </button>
-          </SmallChartCard>
-        </ChatsContainer>
-      </Wrapper>
+              >
+                View More
+              </button>
+            </SmallChartCard>
+          </ChatsContainer>
+        </Wrapper>
+      </AuthCheck>
     </Layout>
   );
 };

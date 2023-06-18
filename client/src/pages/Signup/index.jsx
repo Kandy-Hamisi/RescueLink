@@ -148,6 +148,7 @@ const Signup = () => {
           })
           .then(() => {
             console.log("user added to database!");
+            setIsLoading(false);
             navigate("/login");
             // router.push("/login");
           });
@@ -199,7 +200,9 @@ const Signup = () => {
           value={IDnum}
           onChange={handleIDChange}
         />
-        <ContinueButton onClick={handleSignUp}>Continue</ContinueButton>
+        <ContinueButton onClick={handleSignUp}>
+          {isLoading ? "Loading..." : "Continue"}
+        </ContinueButton>
         <LinkContainer>
           <LinkText>Already have an account?</LinkText>
           <Link to="/login">
