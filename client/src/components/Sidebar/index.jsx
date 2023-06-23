@@ -1,19 +1,5 @@
 import styled from "styled-components";
 import tw from "twin.macro";
-import {
-  FaCaretDown,
-  FaCaretRight,
-  FaCog,
-  FaCogs,
-  FaExclamationCircle,
-  FaRegClipboard,
-  FaRegHeart,
-  FaRocketchat,
-  FaThLarge,
-  FaTimes,
-  FaUsersCog,
-} from "react-icons/fa";
-import { BsBoxArrowRight } from "react-icons/bs";
 import { useEffect, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import {
@@ -26,6 +12,7 @@ import LogoWithText from "../../assets/images/Logo_plus_text.png";
 // icons imports
 import FeatherIcon from "feather-icons-react";
 import { logoutAction } from "../../app/api_calls";
+import { useLocation, useNavigate } from "react-router-dom";
 
 const Wrapper = styled.aside`
   ${tw`
@@ -57,21 +44,6 @@ const Wrapper = styled.aside`
   }
 
   /* width: ${(props) => props.width}; */
-`;
-
-const Button = styled.div`
-  ${tw`
-        absolute
-        p-[10px]
-       
-        bottom-0
-        left-0
-        w-full
-        flex
-        justify-center
-        items-center
-        cursor-pointer
-    `}
 `;
 
 const ExitButton = styled.span`
@@ -106,7 +78,6 @@ const Splitter = styled.hr`
         h-0
         border
         border-gray-300
-        
     `}
 `;
 
@@ -123,47 +94,59 @@ const NavigationContainer = styled.ul`
 
 const NavigationItem = styled.li`
   ${tw`
-        flex 
+        flex
         justify-between
         mb-[1.5rem]
         cursor-pointer
         relative
         hover:text-[#347AE2]
+        hover:bg-[#F5F7FF]
     `}
 
   color: ${(props) => (props.active ? "#347AE2" : "#7C8DB5")};
 `;
-
-const DropDownContainer = styled.ul`
+const ActiveNavigationItem = styled.li`
   ${tw`
         flex
-        flex-col
-        hidden
+        justify-between
+        mb-[1.5rem]
+        cursor-pointer
+        relative
+        text-[#347AE2]
+        
     `}
 `;
 
-const MobileDropDownContainer = styled.ul`
-  ${tw`
-        flex
-        flex-col
-        absolute
-        left-[150px]
-        bg-white
-        z-10
-        border
-        border-gray-500
-        rounded-[5px]
-        p-1.5
-        text-gray-500
-    `}
-`;
+// const DropDownContainer = styled.ul`
+//   ${tw`
+//         flex
+//         flex-col
+//         hidden
+//     `}
+// `;
 
-const DropDownItem = styled.li`
-  ${tw`
-        mb-[1rem]
-        ml-[0.5rem]
-    `}
-`;
+// const MobileDropDownContainer = styled.ul`
+//   ${tw`
+//         flex
+//         flex-col
+//         absolute
+//         left-[150px]
+//         bg-white
+//         z-10
+//         border
+//         border-gray-500
+//         rounded-[5px]
+//         p-1.5
+//         text-gray-500
+//     `}
+// `;
+
+// const DropDownItem = styled.li`
+//   ${tw`
+//         mb-[1rem]
+//         ml-[0.5rem]
+//     `}
+// `;
 
 const Item = styled.div`
   ${tw`
@@ -214,12 +197,6 @@ const Title = styled.h5`
     `}
 `;
 
-const Caret = styled.span`
-  ${tw`
-        
-    `}
-`;
-
 const BottomContainer = styled.ul`
   ${tw`
         mt-[2rem]
@@ -233,6 +210,7 @@ const BottomItem = styled.li`
         mb-[1.5rem]
         cursor-pointer
         hover:text-[#347AE2]
+        hover:bg-[#F5F7FF]
     `}
 
   color: ${(props) => (props.active ? "#347AE2" : "#7C8DB5")};
@@ -244,7 +222,8 @@ const Sidebar = () => {
   const [isMinimized, setIsMinimized] = useState(false);
   const [showDropDown, setShowDropDown] = useState(null);
   const [activeLink, setActiveLink] = useState("dropdown1");
-
+  const navigate = useNavigate();
+  const location = useLocation();
   const width = useSelector((state) => state.width.sidebarWidth);
   const visibility = useSelector((state) => state.width.visibility);
 
@@ -322,115 +301,115 @@ const Sidebar = () => {
       )}
       <Splitter />
       <NavigationContainer>
-        <NavigationItem
-          onClick={() => handleMenuItemClick("dropdown1")}
-          active={activeLink === "dropdown1"}
-        >
-          <Item>
-            <IconTitleContainer>
-              <Icon>
-                <FeatherIcon icon="grid" />
-              </Icon>
-              {!displayIconTexts && <Title>Dashboard</Title>}
-            </IconTitleContainer>
-            <Caret>
+        {location.pathname === "/" ? (
+          <ActiveNavigationItem
+            onClick={() => {
+              navigate("/");
+            }}
+          >
+            <Item>
+              <IconTitleContainer>
+                <Icon>
+                  <FeatherIcon icon="grid" />
+                </Icon>
+                {!displayIconTexts && <Title>Dashboard</Title>}
+              </IconTitleContainer>
+            </Item>
+          </ActiveNavigationItem>
+        ) : (
+          <NavigationItem
+            onClick={() => {
+              navigate("/");
+            }}
+          >
+            <Item>
+              <IconTitleContainer>
+                <Icon>
+                  <FeatherIcon icon="grid" />
+                </Icon>
+                {!displayIconTexts && <Title>Dashboard</Title>}
+              </IconTitleContainer>
+            </Item>
+          </NavigationItem>
+        )}
+        {location.pathname === "/programs" ? (
+          <ActiveNavigationItem
+            onClick={() => {
+              navigate("/programs");
+            }}
+          >
+            <Item>
+              <IconTitleContainer>
+                <Icon>
+                  <FeatherIcon icon="clipboard" />
+                </Icon>
+                {!displayIconTexts && <Title>Programs</Title>}
+              </IconTitleContainer>
+            </Item>
+          </ActiveNavigationItem>
+        ) : (
+          <NavigationItem
+            onClick={() => {
+              navigate("/programs");
+            }}
+          >
+            <Item>
+              <IconTitleContainer>
+                <Icon>
+                  <FeatherIcon icon="clipboard" />
+                </Icon>
+                {!displayIconTexts && <Title>Programs</Title>}
+              </IconTitleContainer>
+            </Item>
+          </NavigationItem>
+        )}
+        {location.pathname === "/donations" ? (
+          <ActiveNavigationItem
+            onClick={() => handleMenuItemClick("dropdown3")}
+            active={activeLink === "dropdown3"}
+          >
+            <Item>
+              <IconTitleContainer>
+                <Icon>
+                  <FeatherIcon icon="heart" />
+                </Icon>
+                {!displayIconTexts && <Title>Donations</Title>}
+              </IconTitleContainer>
+            </Item>
+          </ActiveNavigationItem>
+        ) : (
+          <NavigationItem
+            onClick={() => {
+              // navigate("/donations");
+            }}
+          >
+            <Item>
+              <IconTitleContainer>
+                <Icon>
+                  <FeatherIcon icon="heart" />
+                </Icon>
+                {!displayIconTexts && <Title>Donations</Title>}
+              </IconTitleContainer>
+            </Item>
+          </NavigationItem>
+        )}
+        {location.pathname === "/volunteers" ? (
+          <ActiveNavigationItem
+            onClick={() => handleMenuItemClick("dropdown4")}
+            active={activeLink === "dropdown4"}
+          >
+            <Item>
+              <IconTitleContainer>
+                <Icon>
+                  <FeatherIcon icon="users" />
+                </Icon>
+                {!displayIconTexts && <Title>Volunteers</Title>}
+              </IconTitleContainer>
+              {/* <Caret>
               <FeatherIcon icon="chevron-down" />
-            </Caret>
-          </Item>
-          <DropDownContainer>
-            <DropDownItem>Floods</DropDownItem>
-            <DropDownItem>Fires</DropDownItem>
-            <DropDownItem>Accidents</DropDownItem>
-          </DropDownContainer>
-
-          {showDropDown === "dropdown1" && (
-            <MobileDropDownContainer>
-              <DropDownItem>Floods</DropDownItem>
-              <DropDownItem>Fires</DropDownItem>
-              <DropDownItem>Accidents</DropDownItem>
-            </MobileDropDownContainer>
-          )}
-        </NavigationItem>
-        <NavigationItem
-          onClick={() => handleMenuItemClick("dropdown2")}
-          active={activeLink === "dropdown2"}
-        >
-          <Item>
-            <IconTitleContainer>
-              <Icon>
-                <FeatherIcon icon="clipboard" />
-              </Icon>
-              {!displayIconTexts && <Title>Programs</Title>}
-            </IconTitleContainer>
-            <Caret>
-              <span className="h-4 w-4 text-xs items-center justify-center bg-red-400 p-[6px] text-white rounded-full inline-flex">
-                2
-              </span>
-            </Caret>
-          </Item>
-          <DropDownContainer>
-            <DropDownItem>Floods</DropDownItem>
-            <DropDownItem>Fires</DropDownItem>
-            <DropDownItem>Accidents</DropDownItem>
-          </DropDownContainer>
-
-          {showDropDown === "dropdown2" && (
-            <MobileDropDownContainer>
-              <DropDownItem onClick={() => setShowDropDown(false)}>
-                Floods
-              </DropDownItem>
-              <DropDownItem>Fires</DropDownItem>
-              <DropDownItem>Accidents</DropDownItem>
-            </MobileDropDownContainer>
-          )}
-        </NavigationItem>
-        <NavigationItem
-          onClick={() => handleMenuItemClick("dropdown3")}
-          active={activeLink === "dropdown3"}
-        >
-          <Item>
-            <IconTitleContainer>
-              <Icon>
-                <FeatherIcon icon="heart" />
-              </Icon>
-              {!displayIconTexts && <Title>Donations</Title>}
-            </IconTitleContainer>
-            <Caret>
-              <FeatherIcon icon="chevron-down" />
-            </Caret>
-          </Item>
-          <DropDownContainer>
-            <DropDownItem>Floods</DropDownItem>
-            <DropDownItem>Fires</DropDownItem>
-            <DropDownItem>Accidents</DropDownItem>
-          </DropDownContainer>
-
-          {showDropDown === "dropdown3" && (
-            <MobileDropDownContainer>
-              <DropDownItem onClick={() => setShowDropDown(false)}>
-                Floods
-              </DropDownItem>
-              <DropDownItem>Fires</DropDownItem>
-              <DropDownItem>Accidents</DropDownItem>
-            </MobileDropDownContainer>
-          )}
-        </NavigationItem>
-        <NavigationItem
-          onClick={() => handleMenuItemClick("dropdown4")}
-          active={activeLink === "dropdown4"}
-        >
-          <Item>
-            <IconTitleContainer>
-              <Icon>
-                <FeatherIcon icon="users" />
-              </Icon>
-              {!displayIconTexts && <Title>Volunteers</Title>}
-            </IconTitleContainer>
-            <Caret>
-              <FeatherIcon icon="chevron-down" />
-            </Caret>
-          </Item>
-          <DropDownContainer>
+            </Caret> */}
+            </Item>
+            {/* <DropDownContainer>
             <DropDownItem>Floods</DropDownItem>
             <DropDownItem>Fires</DropDownItem>
             <DropDownItem>Accidents</DropDownItem>
@@ -444,8 +423,42 @@ const Sidebar = () => {
               <DropDownItem>Fires</DropDownItem>
               <DropDownItem>Accidents</DropDownItem>
             </MobileDropDownContainer>
-          )}
-        </NavigationItem>
+          )} */}
+          </ActiveNavigationItem>
+        ) : (
+          <NavigationItem
+            onClick={() => handleMenuItemClick("dropdown4")}
+            active={activeLink === "dropdown4"}
+          >
+            <Item>
+              <IconTitleContainer>
+                <Icon>
+                  <FeatherIcon icon="users" />
+                </Icon>
+                {!displayIconTexts && <Title>Volunteers</Title>}
+              </IconTitleContainer>
+              {/* <Caret>
+              <FeatherIcon icon="chevron-down" />
+            </Caret> */}
+            </Item>
+            {/* <DropDownContainer>
+            <DropDownItem>Floods</DropDownItem>
+            <DropDownItem>Fires</DropDownItem>
+            <DropDownItem>Accidents</DropDownItem>
+          </DropDownContainer>
+
+          {showDropDown === "dropdown4" && (
+            <MobileDropDownContainer>
+              <DropDownItem onClick={() => setShowDropDown(false)}>
+                Floods
+              </DropDownItem>
+              <DropDownItem>Fires</DropDownItem>
+              <DropDownItem>Accidents</DropDownItem>
+            </MobileDropDownContainer>
+          )} */}
+          </NavigationItem>
+        )}
+
         <NavigationItem
           onClick={() => handleMenuItemClick("dropdown5")}
           active={activeLink === "dropdown5"}
