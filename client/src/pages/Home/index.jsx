@@ -3,10 +3,9 @@ import tw from "twin.macro";
 import Layout from "../../components/Layout";
 import { VictoryArea, VictoryChart, VictoryPie } from "victory";
 import MainCards from "../../sections/MainCards";
-import { useDispatch, useSelector } from "react-redux";
-import { useEffect } from "react";
 import "tailwindcss/tailwind.css";
 import AuthCheck from "../../app/Features/AuthCheck";
+import { useSelector } from "react-redux";
 
 // const ChartData = [
 //   { x: 1, y: 2, y0: 0 },
