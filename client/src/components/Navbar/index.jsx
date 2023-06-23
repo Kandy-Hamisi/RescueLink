@@ -4,8 +4,7 @@ import tw from "twin.macro";
 import { man } from "../../assets";
 import { useDispatch, useSelector } from "react-redux";
 import { toggleVisibility } from "../../app/Features/ToggleSlice";
-
-
+import FeatherIcon from "feather-icons-react/build/FeatherIcon";
 
 const Wrapper = styled.header`
   ${tw`
@@ -23,7 +22,8 @@ const Wrapper = styled.header`
 
 const Left = styled.div`
   ${tw`
-    
+    text-[#0B0A37]
+    hover:text-[#347AE2]
   `}
 `;
 
@@ -33,8 +33,9 @@ const Hamburgermenu = styled.span`
     md:hidden
     text-[20px]
     cursor-pointer
+    hover:text-[#347AE2]
   `}
-`
+`;
 
 const NavbarTitle = styled.h1`
   ${tw`
@@ -58,7 +59,7 @@ const Icons = styled.div`
       lg:flex
       items-center
       hidden
-      text-[#1c1b44]
+      text-[#0B0A37]
   `}
 `;
 
@@ -115,15 +116,13 @@ const Caret = styled.span`
   `}
 `;
 
-
 const Navbar = () => {
-
   const visibility = useSelector((state) => state.width.visibility);
   const dispatch = useDispatch();
 
   const handleSidebarToggle = () => {
     dispatch(toggleVisibility());
-  }  
+  };
 
   console.log(visibility);
 
@@ -131,17 +130,18 @@ const Navbar = () => {
     <Wrapper>
       <Left>
         <Hamburgermenu>
-          <FaBars onClick={handleSidebarToggle} />
+          {/* <FaBars onClick={handleSidebarToggle} /> */}
+          <FeatherIcon onClick={handleSidebarToggle} icon="menu" />
         </Hamburgermenu>
       </Left>
 
       <Right>
         <Icons>
           <Icon>
-            <FaSearch />
+            <FeatherIcon icon="search" />
           </Icon>
           <Icon>
-            <FaBell />
+            <FeatherIcon icon="bell" />
             <NotificationDot></NotificationDot>
           </Icon>
         </Icons>

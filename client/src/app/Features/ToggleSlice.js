@@ -5,6 +5,7 @@ const initialState = {
     visibility: false,
 };
 
+
 const toggleSLice = createSlice({
     name: 'width',
     initialState,
