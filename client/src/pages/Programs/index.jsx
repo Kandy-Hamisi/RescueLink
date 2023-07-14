@@ -65,7 +65,7 @@ const ProgramList = styled.div`
     space-y-4
     
     `}
-  width:40%
+  width:40%;
 `;
 const ProgramCard = styled.div`
   ${tw`
@@ -80,7 +80,7 @@ const ProgramCard = styled.div`
     hover:bg-gray-50
     cursor-pointer
 `}
-  width:100%
+  width:100%;
 `;
 const ProgramTextContainer = styled.div`
   ${tw`flex 
@@ -269,7 +269,7 @@ const Programs = () => {
   //   // selecting the program
   //   setselectedProgram(program);
   // };
-  console.log(programDataList);
+  console.log("Program Data: ", programDataList);
 
   return (
     <Layout>
